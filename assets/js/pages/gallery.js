@@ -1,12 +1,14 @@
+import { openLightbox } from '../components/gallery-lightbox.js';
+
 export function render() {
     const page = document.createElement('div');
     page.className = 'page';
     page.innerHTML = `
-        <h1>Galeri Dokumentasi</h1>
-        <div style="margin-bottom: 1rem;">
-            <button class="btn" id="filter-all">Semua</button>
-            <button class="btn btn-outline" id="filter-rutinan">Rutinan</button>
-            <button class="btn btn-outline" id="filter-agenda">Agenda</button>
+        <h1 class="page-title">Galeri Dokumentasi</h1>
+        <div class="filter-bar" id="gallery-filters">
+            <button type="button" class="btn" data-filter="all">Semua</button>
+            <button type="button" class="btn btn-outline" data-filter="rutinan">Rutinan</button>
+            <button type="button" class="btn btn-outline" data-filter="agenda">Agenda</button>
         </div>
         <div class="grid" id="gallery-grid">
             <p>Memuat dokumentasi...</p>
@@ -14,33 +16,50 @@ export function render() {
     `;
 
     const gallery = page.querySelector('#gallery-grid');
+    let photos = [];
+    let activeFilter = 'all';
+
+    function paint() {
+        const filtered = activeFilter === 'all'
+            ? photos
+            : photos.filter(p => (p.category || '').toLowerCase() === activeFilter
+                || (p.event || '').toLowerCase().includes(activeFilter));
+        if (!filtered.length) {
+            gallery.innerHTML = '<p>Tidak ada foto.</p>';
+            return;
+        }
+        gallery.innerHTML = '';
+        filtered.forEach(photo => {
+            const card = document.createElement('div');
+            card.className = 'card gallery-item';
+            card.innerHTML = `
+                <img src="${photo.url}" alt="${photo.title}" loading="lazy" width="400" height="300">
+                <div class="gallery-meta">
+                    <h4>${photo.title}</h4>
+                    <p><small>${photo.event || ''}</small></p>
+                </div>
+            `;
+            card.addEventListener('click', () => openLightbox(photo.url, photo.title));
+            gallery.appendChild(card);
+        });
+    }
 
     fetch('assets/data/gallery.json')
         .then(res => res.json())
-        .then(photos => {
-            gallery.innerHTML = '';
-            photos.forEach(photo => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <img src="${photo.url}" alt="${photo.title}" style="width: 100%; border-radius: 8px;">
-                    <h4 style="margin-top: 0.5rem;">${photo.title}</h4>
-                    <p><small>${photo.event || ''}</small></p>
-                `;
-                gallery.appendChild(card);
-            });
+        .then(data => {
+            photos = data;
+            paint();
         })
-        .catch(() => gallery.innerHTML = '<p>Gagal memuat dokumentasi.</p>');
+        .catch(() => { gallery.innerHTML = '<p>Gagal memuat dokumentasi.</p>'; });
 
-    // Placeholder filter
-    page.querySelectorAll('button').forEach(btn => {
+    page.querySelectorAll('#gallery-filters button').forEach(btn => {
         btn.addEventListener('click', () => {
-            page.querySelectorAll('button').forEach(b => {
-                b.classList.remove('btn');
-                b.classList.add('btn-outline');
+            page.querySelectorAll('#gallery-filters button').forEach(b => {
+                b.classList.toggle('btn', b === btn);
+                b.classList.toggle('btn-outline', b !== btn);
             });
-            btn.classList.remove('btn-outline');
-            btn.classList.add('btn');
+            activeFilter = btn.dataset.filter;
+            paint();
         });
     });
 

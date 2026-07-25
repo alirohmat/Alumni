@@ -34,11 +34,35 @@ a:hover { text-decoration: underline; }
     padding: 0 1rem;
 }
 
-@media (max-width: 768px) {
+/* Mobile-First Approach: Mobile styles first, then desktop enhancements */
+/* Mobile-First: 320px - 767px */
+@media (max-width: 767px) {
     :root {
         --h1-fs: 2rem;
         --h2-fs: 1.75rem;
         --h3-fs: 1.25rem;
         --body-fs: 0.9375rem; /* 15px */
+    }
+
+    -webkit-tap-highlight-color: transparent;
+
+    html {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    body { overflow-x: hidden; }
+
+    .btn:active, .navbar-links a:active, .card:active, .gallery-item:active {
+        opacity: 0.75;
+        transform: scale(0.98);
+        transition: transform 0.1s ease, opacity 0.1s ease;
+    }
+}
+
+/* Desktop: 769px+ */
+@media (min-width: 769px) {
+    .btn:active, .navbar-links a:active {
+        transition: none;
     }
 }

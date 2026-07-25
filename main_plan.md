@@ -155,6 +155,12 @@
 
 **Responsive:** Mobile-first, breakpoint di 768px dan 1024px
 
+**Prinsip Mobile UX/UI:**
+- Touch targets minimal 48x48px
+- Navigasi utama sederhana, accessible via hamburger menu
+- Prioritaskan konten inti di atas lipatan
+- Input form besar dan mudah disentuh
+
 **Font-size scale:**
 - h1: 2.5rem
 - h2: 2rem
@@ -192,6 +198,7 @@
 
 ### Fase 5 — Polish (1-2 jam)
 - [ ] Responsive check (HP + desktop)
+- [ ] Mobile UI/UX Review (touch targets, navigasi, form input)
 - [ ] PWA manifest
 - [ ] Custom domain setup (kalau ada)
 - [ ] Test all flows

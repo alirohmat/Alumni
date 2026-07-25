@@ -31,12 +31,12 @@ export function render() {
 
     // Load pending alumni
     page.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="admin-header">
             <h1>Admin Panel</h1>
-            <button class="btn" id="admin-logout">Logout</button>
+            <button type="button" class="btn" id="admin-logout">Logout</button>
         </div>
-        <h3 style="margin-top: 2rem;">Pendaftaran Alumni Menunggu Konfirmasi</h3>
-        <div id="pending-list" style="margin-top: 1rem;">
+        <h3 style="margin-top: 1.5rem;">Pendaftaran Alumni Menunggu Konfirmasi</h3>
+        <div class="grid" id="pending-list" style="margin-top: 1rem;">
             <p>Memuat...</p>
         </div>
     `;
@@ -60,18 +60,15 @@ export function render() {
             list.innerHTML = '';
             pending.forEach(a => {
                 const item = document.createElement('div');
-                item.className = 'card';
-                item.style.display = 'flex';
-                item.style.justifyContent = 'space-between';
-                item.style.alignItems = 'center';
+                item.className = 'card admin-row';
                 item.innerHTML = `
                     <div>
                         <h4>${a.name} <small>(Angkatan ${a.graduation_year})</small></h4>
                         <p>${a.city} | ${a.occupation}</p>
                     </div>
-                    <div style="display: flex; gap: .5rem;">
-                        <button class="btn approve-btn" data-id="${a.id}">Setujui</button>
-                        <button class="btn btn-outline reject-btn" data-id="${a.id}">Tolak</button>
+                    <div class="admin-actions">
+                        <button type="button" class="btn approve-btn" data-id="${a.id}">Setujui</button>
+                        <button type="button" class="btn btn-outline reject-btn" data-id="${a.id}">Tolak</button>
                     </div>
                 `;
                 list.appendChild(item);

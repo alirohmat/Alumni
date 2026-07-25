@@ -1,4 +1,4 @@
-import { render as navbar } from './components/navbar.js';
+import { render as navbar, setActiveRoute } from './components/navbar.js';
 
 function init() {
     const app = document.getElementById('app');
@@ -13,18 +13,19 @@ function init() {
     app.append(footer);
 
     async function router() {
-
         pageContainer.innerHTML = '';
         const hash = location.hash.replace('#', '') || 'home';
+        setActiveRoute(hash);
+        window.scrollTo(0, 0);
 
         let mod;
         switch (hash) {
-            case 'home':    mod = await import('./pages/home.js'); break;
-            case 'calendar':mod = await import('./pages/calendar.js'); break;
-            case 'alumni':  mod = await import('./pages/alumni.js'); break;
-            case 'gallery': mod = await import('./pages/gallery.js'); break;
-            case 'admin':   mod = await import('./pages/admin.js'); break;
-            default:        mod = await import('./pages/home.js'); break;
+            case 'home':     mod = await import('./pages/home.js'); break;
+            case 'calendar': mod = await import('./pages/calendar.js'); break;
+            case 'alumni':   mod = await import('./pages/alumni.js'); break;
+            case 'gallery':  mod = await import('./pages/gallery.js'); break;
+            case 'admin':    mod = await import('./pages/admin.js'); break;
+            default:         mod = await import('./pages/home.js'); break;
         }
 
         if (mod && mod.render) {

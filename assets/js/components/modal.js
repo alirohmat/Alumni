@@ -5,18 +5,21 @@ export function open(title, content, onClose) {
         <div class="modal-content">
             <h2>${title}</h2>
             <div id="modal-body">${content}</div>
-            <div style="margin-top:1rem;text-align:right;">
-                <button class="btn" id="modal-close-btn">Tutup</button>
+            <div style="margin-top:1rem;">
+                <button type="button" class="btn btn-outline" id="modal-close-btn" style="width:100%;">Tutup</button>
             </div>
         </div>
     `;
-    document.body.appendChild(overlay);
-    overlay.querySelector('#modal-close-btn').addEventListener('click', () => {
+    function close() {
         overlay.remove();
+        document.body.classList.remove('nav-open');
         if (onClose) onClose();
-    });
+    }
+    document.body.classList.add('nav-open');
+    document.body.appendChild(overlay);
+    overlay.querySelector('#modal-close-btn').addEventListener('click', close);
     overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) { overlay.remove(); if (onClose) onClose(); }
+        if (e.target === overlay) close();
     });
     return overlay.querySelector('#modal-body');
 }

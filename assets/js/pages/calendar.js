@@ -1,90 +1,74 @@
-import { open } from '../components/modal.js';
 import { fetchEvents } from '../data/events.js';
 
-// Helper to format recurrence
+const DAYS = { SU: 'Minggu', MO: 'Senin', TU: 'Selasa', WE: 'Rabu', TH: 'Kamis', FR: 'Jumat', SA: 'Sabtu' };
+
 function formatRecurrence(event) {
-    if (event.type === 'rutinan' && event.recurrence) {
-        const { freq, byday, bysetpos } = event.recurrence;
-        if (freq === 'monthly') {
-            return setiapBulan(byday, bysetpos);
-        }
+    if (event.type !== 'rutinan' || !event.recurrence) return event.date || '';
+    const { freq, byday, bysetpos } = event.recurrence;
+    if (freq === 'monthly') {
+        const dayName = DAYS[byday] || byday;
+        if (bysetpos === -1) return `Setiap bulan, ${dayName} terakhir`;
+        return `Setiap bulan, ${dayName}`;
     }
     return '';
 }
 
-function setiapBulan(byday, bysetpos) {
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-    const dayName = days[parseInt(byday)];
-    if (bysetpos === -1) return `Setiap bulan terakhir ${dayName}`;
-    return `Setiap bulan ${dayName}`;
+function paintList(container, events) {
+    if (!events.length) {
+        container.innerHTML = '<p>Tidak ada kegiatan aktif.</p>';
+        return;
+    }
+    container.innerHTML = events.map(event => `
+        <article class="event-item">
+            <h4>${event.title}</h4>
+            <p>${event.description || ''}</p>
+            <p>${formatRecurrence(event)}</p>
+            <p>⏰ ${event.time || '—'} · 📍 ${event.location || '—'}</p>
+            ${event.contact ? `<p><a class="btn btn-sm" style="margin-top:.5rem;display:inline-flex;" href="https://wa.me/${event.contact}?text=${encodeURIComponent('Halo, info kegiatan: ' + event.title)}" target="_blank" rel="noopener">WhatsApp</a></p>` : ''}
+        </article>
+    `).join('');
 }
 
 export function render() {
     const page = document.createElement('div');
     page.className = 'page';
     page.innerHTML = `
-        <h1>Kalender Kegiatan</h1>
-        <div style="margin-bottom: 1rem;">
-            <button class="btn" id="filter-rutinan">Rutinan</button>
-            <button class="btn btn-outline" id="filter-agenda">Agenda</button>
-            <button class="btn btn-outline" id="filter-all">Semua</button>
+        <h1 class="page-title">Kalender Kegiatan</h1>
+        <div class="filter-bar" id="cal-filters">
+            <button type="button" class="btn" data-filter="all">Semua</button>
+            <button type="button" class="btn btn-outline" data-filter="rutinan">Rutinan</button>
+            <button type="button" class="btn btn-outline" data-filter="agenda">Agenda</button>
         </div>
-        <div id="calendar"></div>
-        <div id="event-detail" style="margin-top: 2rem;"></div>
-    `;
-
-    // Mock FullCalendar integration for now
-    const calendarEl = page.querySelector('#calendar');
-    calendarEl.innerHTML = `
-        <div style="border: 1px solid #ddd; padding: 1rem; text-align: center; background: #fafafa;">
-            <h3>FullCalendar.js akan di-load di sini</h3>
-            <p style="font-size: 0.9rem; color: #666;">
-                Integrasi dengan FullCalendar.js v6 (MIT License) akan ditambahkan.
-            </p>
-            <div id="event-list" style="margin-top: 1rem;"></div>
+        <div class="event-list" id="event-list">
+            <p>Memuat...</p>
         </div>
     `;
 
-    // Event list
-    const eventList = page.querySelector('#event-list');
+    const listEl = page.querySelector('#event-list');
+    let all = [];
+    let filter = 'all';
+
+    function apply() {
+        const rows = all.filter(e => e.active !== false)
+            .filter(e => filter === 'all' || e.type === filter);
+        paintList(listEl, rows);
+    }
+
     fetchEvents().then(events => {
-        let html = '';
-        events.filter(e => e.active).forEach(event => {
-            html += `
-                <div style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px;">
-                    <h4>${event.title}</h4>
-                    <p>${formatRecurrence(event)}</p>
-                    <p><small>⏰ ${event.time} | 📍 ${event.location}</small></p>
-                </div>
-            `;
-        });
-        eventList.innerHTML = html || '<p>Tidak ada kegiatan aktif.</p>';
+        all = events;
+        apply();
+    }).catch(() => {
+        listEl.innerHTML = '<p>Gagal memuat kegiatan.</p>';
     });
 
-    // Filter buttons
-    const filters = {
-        'filter-rutinan': () => 'rutinan',
-        'filter-agenda': () => 'agenda',
-        'filter-all': () => null
-    };
-
-    Object.entries(filters).forEach(([id, getFilter]) => {
-        const btn = page.querySelector(`#${id}`);
+    page.querySelectorAll('#cal-filters button').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('#calendar button').forEach(b => {
-                b.classList.remove('btn');
-                b.classList.add('btn-outline');
+            page.querySelectorAll('#cal-filters button').forEach(b => {
+                b.classList.toggle('btn', b === btn);
+                b.classList.toggle('btn-outline', b !== btn);
             });
-            btn.classList.remove('btn-outline');
-            btn.classList.add('btn');
-
-            // TODO: Implement actual filtering
-            fetchEvents().then(events => {
-                const filtered = getFilter() 
-                    ? events.filter(e => e.type === getFilter())
-                    : events;
-                console.log('Filtered events:', filtered);
-            });
+            filter = btn.dataset.filter;
+            apply();
         });
     });
 

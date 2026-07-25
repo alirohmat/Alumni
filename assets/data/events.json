@@ -2,7 +2,7 @@
   {
     "id": "evt-001",
     "title": "Kajian Bulanan",
-    "description": "Kajian rutin bulanan bersama Kyai...",
+    "description": "Kajian rutin bulanan untuk alumni",
     "type": "rutinan",
     "recurrence": { "freq": "monthly", "byday": "FR", "bysetpos": -1 },
     "time": "15:00",
@@ -11,14 +11,15 @@
     "active": true
   },
   {
-    "id": "evt-002",
-    "title": "Haul KH. Mansyaul Huda",
-    "description": "Peringatan tahunan haul pendiri.",
+    "id": "evt-002", 
+    "title": "Reuni Akbar 2026",
+    "description": "Reuni alumni se-pondok",
     "type": "agenda",
-    "date": "2026-12-15",
+    "date": "2026-08-17",
     "time": "08:00",
     "location": "Ponpes Mansyaul Huda 02",
     "contact": "628123456789",
+    "rsvp": true,
     "active": true
   }
 ]

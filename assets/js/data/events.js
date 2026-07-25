@@ -1,10 +1,10 @@
+# Simple JSON loader for demo
 export async function fetchEvents() {
-    try {
-        const response = await fetch('assets/data/events.json');
-        if (!response.ok) throw new Error('Failed to fetch events');
-        return response.json();
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        return [];
-    }
+    const response = await fetch('assets/data/events.json');
+    return response.json();
+}
+
+export async function fetchAlumni() {
+    const response = await fetch('assets/data/alumni.json');
+    return response.json();
 }

@@ -4,20 +4,48 @@ export function render() {
     const nav = document.createElement('nav');
     nav.className = 'navbar';
     nav.innerHTML = `
-        <a href="#home" class="navbar-brand" style="text-decoration:none;color:#fff;font-weight:bold;font-size:1.2rem;">Kalamashada</a>
-        <button class="navbar-toggle" aria-label="Toggle menu">&#9776;</button>
+        <a href="#home" class="navbar-brand">Kalamashada</a>
+        <button type="button" class="navbar-toggle" aria-label="Buka menu" aria-expanded="false">&#9776;</button>
         <ul class="navbar-links">
-            <li><a href="#home">Beranda</a></li>
-            <li><a href="#calendar">Kalender</a></li>
-            <li><a href="#alumni">Alumni</a></li>
-            <li><a href="#gallery">Galeri</a></li>
-            <li><a href="#admin">Admin</a></li>
+            <li><a href="#home" data-route="home">Beranda</a></li>
+            <li><a href="#calendar" data-route="calendar">Kalender</a></li>
+            <li><a href="#alumni" data-route="alumni">Alumni</a></li>
+            <li><a href="#gallery" data-route="gallery">Galeri</a></li>
+            <li><a href="#admin" data-route="admin">Admin</a></li>
         </ul>
     `;
+
     const toggle = nav.querySelector('.navbar-toggle');
     const links = nav.querySelector('.navbar-links');
-    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    function closeMenu() {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+    }
+
+    function openMenu() {
+        links.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('nav-open');
+    }
+
+    toggle.addEventListener('click', () => {
+        if (links.classList.contains('open')) closeMenu();
+        else openMenu();
+    });
+
+    links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => closeMenu());
+    });
+
     return nav;
+}
+
+export function setActiveRoute(route) {
+    document.querySelectorAll('.navbar-links a').forEach(a => {
+        a.classList.toggle('active', a.dataset.route === route);
+    });
 }
 
 export function logoutPrompt() {

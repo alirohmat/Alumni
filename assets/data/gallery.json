@@ -1,5 +1,34 @@
 [
-  { "id": "gal-001", "title": "Kajian Bulanan - Desember", "event": "Rutinan", "url": "https://via.placeholder.com/400x300?text=Foto+Kegiatan+1" },
-  { "id": "gal-002", "title": "Haul KH. Mansyaul Huda", "event": "Agenda", "url": "https://via.placeholder.com/400x300?text=Foto+Kegiatan+2" },
-  { "id": "gal-003", "title": "Bukber Akbar", "event": "Agenda", "url": "https://via.placeholder.com/400x300?text=Foto+Kegiatan+3" }
+  {
+    "id": "gal-001",
+    "title": "Kajian Bulanan Januari",
+    "url": "https://picsum.photos/seed/kajian1/400/300.jpg",
+    "event": "Kajian Rutin",
+    "category": "rutinan",
+    "date": "2026-01-15"
+  },
+  {
+    "id": "gal-002",
+    "title": "Acara Lulusan 2021",
+    "url": "https://picsum.photos/seed/lulusan2021/400/300.jpg",
+    "event": "Reuni Angkatan",
+    "category": "agenda",
+    "date": "2021-06-20"
+  },
+  {
+    "id": "gal-003",
+    "title": "Pertemuan Alumni",
+    "url": "https://picsum.photos/seed/pertemuan1/400/300.jpg",
+    "event": "Rapat Koordinasi",
+    "category": "agenda",
+    "date": "2026-07-01"
+  },
+  {
+    "id": "gal-004",
+    "title": "Kajian Jumat",
+    "url": "https://picsum.photos/seed/kajian2/400/300.jpg",
+    "event": "Kajian Rutin",
+    "category": "rutinan",
+    "date": "2026-02-20"
+  }
 ]
