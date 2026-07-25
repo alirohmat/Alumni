@@ -1,20 +1,46 @@
 {
   "name": "Alumni Mansyaul Huda 02",
   "short_name": "Kalamashada",
-  "start_url": "/index.html",
+  "description": "Sistem Informasi Alumni Pondok Pesantren Mansyaul Huda 02 (Kalamashada)",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#FAFAFA",
   "theme_color": "#1B5E20",
+  "lang": "id",
   "icons": [
     {
       "src": "assets/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kalender",
+      "short_name": "Kalender",
+      "url": "./index.html#calendar",
+      "description": "Jadwal kegiatan alumni"
+    },
+    {
+      "name": "Direktori Alumni",
+      "short_name": "Alumni",
+      "url": "./index.html#alumni",
+      "description": "Cari rekan seangkatan"
+    },
+    {
+      "name": "Galeri",
+      "short_name": "Galeri",
+      "url": "./index.html#gallery",
+      "description": "Foto dokumentasi"
     }
   ]
 }

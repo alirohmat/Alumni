@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Poppins:wght@600;700;800&display=swap');
 @import url('https://unpkg.com/@phosphor-icons/web@2.0.3/src/icons.css');
 
 :root {
@@ -7,25 +7,71 @@
     --accent: #FFD54F;
     --text: #212121;
     --bg: #FAFAFA;
-
+    
+    /* Enhanced Animations */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Shadow System */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    
     /* Font Scale */
     --h1-fs: 2.5rem;
     --h2-fs: 2rem;
     --h3-fs: 1.5rem;
     --body-fs: 1rem;
     --small-fs: 0.875rem;
+    
+    /* Spacing Scale */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Open Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: var(--body-fs); }
-h1, h2, h3 { font-family: 'Poppins', sans-serif; line-height: 1.2; }
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: var(--body-fs);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
 h1 { font-size: var(--h1-fs); }
 h2 { font-size: var(--h2-fs); }
 h3 { font-size: var(--h3-fs); }
 small { font-size: var(--small-fs); }
 
-a { color: var(--primary); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+a:hover { color: #2E7D32; }
+a:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
 
 /* Responsive utility */
 .container {
@@ -34,21 +80,34 @@ a:hover { text-decoration: underline; }
     padding: 0 1rem;
 }
 
-/* Mobile-First Approach: Mobile styles first, then desktop enhancements */
+/* Focus ring for keyboard a11y */
+:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* Mobile-First: 320px - 767px */
 @media (max-width: 767px) {
     :root {
         --h1-fs: 2rem;
         --h2-fs: 1.75rem;
         --h3-fs: 1.25rem;
-        --body-fs: 0.9375rem; /* 15px */
+        --body-fs: 0.9375rem;
     }
-
-    -webkit-tap-highlight-color: transparent;
 
     html {
         -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
     }
 
     body { overflow-x: hidden; }

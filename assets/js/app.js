@@ -34,7 +34,14 @@ function init() {
 
         footer.innerHTML = `
             <p>&copy; ${new Date().getFullYear()} Alumni Mansyaul Huda 02 — Kalamashada</p>
-            <p><a href="https://wa.me/628123456789">Hubungi Kami</a></p>
+            <p>Menyambung silaturahmi, merawat tradisi.</p>
+            <p>
+                <a href="https://wa.me/628123456789" rel="noopener">WhatsApp</a>
+                ·
+                <a href="#home">Beranda</a>
+                ·
+                <a href="#alumni">Direktori</a>
+            </p>
         `;
     }
 
