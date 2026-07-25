@@ -1,0 +1,12 @@
+[
+  { "id": "alm-001", "name": "Ahmad Fauzi", "nickname": "Upi", "generation": 2010, "graduation_year": 2016, "phone": "628123456789", "city": "Sidoarjo", "occupation": "Guru", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-002", "name": "Budi Santoso", "nickname": "Bud", "generation": 2012, "graduation_year": 2018, "phone": "628123456790", "city": "Malang", "occupation": "Karyawan Swasta", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-003", "name": "Cahyo Wijaya", "nickname": "Cahyo", "generation": 2015, "graduation_year": 2021, "phone": "628123456791", "city": "Surabaya", "occupation": "Pelajar", "photo_url": "", "social": { "instagram": "" }, "status": "pending" },
+  { "id": "alm-004", "name": "Doni Pratama", "nickname": "Don", "generation": 2008, "graduation_year": 2014, "phone": "628123456792", "city": "Jakarta", "occupation": "Wiraswasta", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-005", "name": "Eka Putri", "nickname": "Eka", "generation": 2011, "graduation_year": 2017, "phone": "628123456793", "city": "Batu", "occupation": "Guru", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-006", "name": "Fajar Mustakim", "nickname": "Fajar", "generation": 2013, "graduation_year": 2019, "phone": "628123456794", "city": "Pasuruan", "occupation": "PNS", "photo_url": "", "social": { "instagram": "" }, "status": "pending" },
+  { "id": "alm-007", "name": "Gita Sari", "nickname": "Gita", "generation": 2014, "graduation_year": 2020, "phone": "628123456795", "city": "Probolinggo", "occupation": "Mahasiswa", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-008", "name": "Hendra Kusuma", "nickname": "Hendra", "generation": 2009, "graduation_year": 2015, "phone": "628123456796", "city": "Sidoarjo", "occupation": "Pegawai Negeri", "photo_url": "", "social": { "instagram": "" }, "status": "approved" },
+  { "id": "alm-009", "name": "Indah Permata", "nickname": "Indah", "generation": 2016, "graduation_year": 2022, "phone": "628123456797", "city": "Mojokerto", "occupation": "Pelajar", "photo_url": "", "social": { "instagram": "" }, "status": "pending" },
+  { "id": "alm-010", "name": "Joko Susilo", "nickname": "Joki", "generation": 2010, "graduation_year": 2016, "phone": "628123456798", "city": "Lamongan", "occupation": "Petani", "photo_url": "", "social": { "instagram": "" }, "status": "approved" }
+]

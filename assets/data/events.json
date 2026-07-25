@@ -1,0 +1,24 @@
+[
+  {
+    "id": "evt-001",
+    "title": "Kajian Bulanan",
+    "description": "Kajian rutin bulanan bersama Kyai...",
+    "type": "rutinan",
+    "recurrence": { "freq": "monthly", "byday": "FR", "bysetpos": -1 },
+    "time": "15:00",
+    "location": "Mesjid Al-Huda",
+    "contact": "628123456789",
+    "active": true
+  },
+  {
+    "id": "evt-002",
+    "title": "Haul KH. Mansyaul Huda",
+    "description": "Peringatan tahunan haul pendiri.",
+    "type": "agenda",
+    "date": "2026-12-15",
+    "time": "08:00",
+    "location": "Ponpes Mansyaul Huda 02",
+    "contact": "628123456789",
+    "active": true
+  }
+]

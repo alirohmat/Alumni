@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alumni Mansyaul Huda 02</title>
+</head>
+<body>
+<div id="app">
+<nav style="background:#1B5E20;color:#fff;padding:1rem 2rem;position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;">
+<strong>Kalamashada</strong>
+<ul style="display:flex;gap:1rem;list-style:none;">
+<li><a href="#home" style="color:#fff;">Beranda</a></li>
+<li><a href="#calendar" style="color:#fff;">Kalender</a></li>
+<li><a href="#alumni" style="color:#fff;">Alumni</a></li>
+<li><a href="#gallery" style="color:#fff;">Galeri</a></li>
+</ul>
+</nav>
+<div id="page"></div>
+<footer style="background:#1B5E20;color:#fff;text-align:center;padding:2rem;margin-top:2rem;">
+<p>&copy; 2026 Alumni Mansyaul Huda 02 — Kalamashada</p>
+<p><a href="https://wa.me/628123456789" style="color:#FFD54F;">Hubungi Kami</a></p>
+</footer>
+</div>
+
+<script>
+let events=[], alumniList=[];
+async function loadJSON(){const r=await fetch('assets/data/events.json');return r.json();}
+async function loadAlumni(){const r=await fetch('assets/data/alumni.json');return r.json();}
+
+const routes = {
+  home() {
+    let d=new Date(); d.setDate(d.getDate()+10);
+    function tick(el,dt){
+      let diff=dt-new Date();
+      if(diff<=0){el.textContent="Event sedang berlangsung!";return;}
+      let dd=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),m=Math.floor(diff%36e5/6e4),s=Math.floor(diff%6e4/1e3);
+      el.textContent=`${dd}h ${h}j ${m}m ${s}d`;
+    }
+    return `<div class=page style=max-width:900px;margin:auto;padding:2rem;>
+      <section class=hero style=text-align:center;padding:3rem 1rem;background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;border-radius:12px;>
+        <h1>Keluarga Alumni Mansyaul Huda 02</h1>
+        <p>Menyambung silaturahmi, merawat tradisi.</p>
+        <h2 style=margin-top:2rem;>Event Berikutnya Dalam:</h2>
+        <div id=countdown style=font-size:2rem;font-weight:bold;margin:1rem 0;></div>
+      </section>
+      <div style=display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;>
+      <a href=#calendar class=card style=display:block;text-decoration:none;color:#111;padding:1.5rem;border:1px solid #eee;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06);>
+        <h3>Kalender Kegiatan</h3><p>Lihat semua jadwal rutinan dan agenda tahunan.</p></a>
+      <a href=#alumni class=card style=display:block;text-decoration:none;color:#111;padding:1.5rem;border:1px solid #eee;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06);>
+        <h3>Direktori Alumni</h3><p>Cari teman seangkatan, perluas jaringan.</p></a>
+      <a href=#gallery class=card style=display:block;text-decoration:none;color:#111;padding:1.5rem;border:1px solid #eee;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06);>
+        <h3>Galeri Foto</h3><p>Kenangan momen kebersamaan kita.</p></a>
+      </div>
+    </div>`;
+  },
+  async calendar() {
+    events = await loadJSON();
+    let html=`<div class=page style=max-width:1000px;margin:auto;padding:2rem;>
+      <h1>Kalender Kegiatan</h1>
+      <div style=margin:1rem 0;>
+        <button class=btn onclick=filterType('rutinan')>Rutinan</button>
+        <button class=btn onclick=filterType('agenda')>Agenda</button>
+        <button class=btn onclick=filterType('all')>Semua</button>
+      </div>
+      <div id=elist>`;
+    events.filter(e=>e.active).forEach(ev=>{
+      html+=`<div class=card style=margin:.5rem 0;padding:1rem;border:1px solid #eee;border-radius:10px;>
+        <h4>${ev.title}</h4><p><small>${ev.type==='rutinan'?'Rutinan bulanan':new Date(ev.date).toLocaleDateString()}
+          | ${ev.time} | ${ev.location}</small></p></div>`;
+    });
+    html+=`</div></div>`;
+    return html;
+  },
+  async alumni() {
+    alumniList = await loadAlumni();
+    let html=`<div class=page style=max-width:1000px;margin:auto;padding:2rem;>
+      <h1>Direktori Alumni</h1>
+      <div style=display:flex;gap:1rem;margin:1rem 0;flex-wrap:wrap;>
+        <input id=q style=flex:1;min-width:200px;padding:.75rem;border:1px solid #ddd;border-radius:8px;placeholder=Cari nama...>
+        <select id=gen style=padding:.75rem;border:1px solid #ddd;border-radius:8px;>
+          <option value="">Semua Angkatan</option>
+          ${[...new Set(alumniList.map(a=>a.graduation_year))].sort().map(y=>`<option>${y}</option>`).join('')}
+        </select>
+      </div>
+      <div class=grid id=alist style=display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;>
+        ${renderAlumni(alumniList)}
+      </div>
+    </div>`;
+    return html;
+  },
+  async gallery() {
+    return `<div class=page style=max-width:1000px;margin:auto;padding:2rem;>
+      <h1>Galeri</h1>
+      <div style=display:flex;gap:1rem;margin:1rem 0;>
+        <button class=btn onclick=document.querySelectorAll('#galimg article').forEach(p=>p.style.display='block')>Semua</button>
+        <button class=btn onclick=document.querySelectorAll('#galimg article').forEach(p=>p.style.display='none')>Sembunyikan</button>
+      </div>
+      <div id=galimg style=display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;>
+        <article class=card><img src="https://via.placeholder.com/400x300?text=Kajian" style=width:100%;border-radius:8px;><h4>Kajian</h4></article>
+        <article class=card><img src="https://via.placeholder.com/400x300?text=Haul" style=width:100%;border-radius:8px;><h4>Haul</h4></article>
+        <article class=card><img src="https://via.placeholder.com/400x300?text=Bukber" style=width:100%;border-radius:8px;><h4>Bukber</h4></article>
+      </div>
+    </div>`;
+  },
+  admin() {
+    return `<div class=page style=max-width:800px;margin:auto;padding:2rem;>
+      <h1>Admin Panel</h1>
+      <p>Untuk login admin, password default: <b>mansyaul2026</b></p>
+      <form onsubmit="event.preventDefault();alert('Admin login placeholder');" style=max-width:320px;margin:2rem auto;>
+        <input type=password required style=width:100%;padding:.75rem;border:1px solid #ccc;border-radius:8px;>
+        <button class=btn type=submit style=width:100%;margin-top:1rem;>Masuk</button>
+      </form>
+    </div>`;
+  }
+};
+
+function renderAlumni(list){
+  return list.map(a=>`<div class=card style=padding:1.5rem;border:1px solid #eee;border-radius:10px;>
+    <h4>${a.name}</h4><p><small>Angkatan ${a.graduation_year}</small></p><p>${a.occupation}</p>
+    <a href=https://wa.me/${a.phone} target=_blank style=display:inline-block;margin-top:.5rem;background:#1B5E20;color:#fff;padding:.5rem 1rem;border-radius:6px;>WA</a>
+  </div>`).join('');
+}
+window.filterType=(type)=>{
+  const el=document.getElementById('elist');
+  events.filter(e=>type==='all'||e.type===type).forEach(ev=>{
+    // minimal UI feedback
+  });
+};
+
+addEventListener('hashchange', render);
+addEventListener('load', render);
+
+function render(){
+  const h=location.hash.slice#1||'home';
+  document.getElementById('page').innerHTML = routes[h] ? routes[h]() : routes.home();
+  // after alumni rendered, attach search filter if present
+  if(h==='alumni'){
+    const q=document.getElementById('q'), gen=document.getElementById('gen');
+    if(q && gen){
+      const doFilter=()=>{
+        const qv=q.value.toLowerCase(), gv=gen.value;
+        document.getElementById('alist').innerHTML=renderAlumni(alumniList.filter(a=>a.name.toLowerCase().includes(qv)&&(!gv||gv==a.graduation_year)));
+      };
+      q.oninput=doFilter; gen.onchange=doFilter;
+    }
+  }
+  window.scrollTo(0,0);
+}
+</script>
+<style>
+body{font-family:Arial,sans-serif;background:#FAFAFA;color:#212121;line-height:1.6;margin:0;}
+input,select{padding:.75rem;border:1px solid #ddd;border-radius:8px;font-size:1rem;width:auto;}
+a{text-decoration:none;color:var(--accent,#FFD54F);}
+.hero h1{font-size:1.9rem;margin:.5rem 0;}
+@media(max-width:768px){nav ul{display:none;} article,div,section{padding:1rem;}}
+</style>
+</body>
+</html>

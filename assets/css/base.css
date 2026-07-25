@@ -1,0 +1,11 @@
+:root {
+    --primary: #1B5E20;
+    --secondary: #81C784;
+    --accent: #FFD54F;
+    --text: #212121;
+    --bg: #FAFAFA;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Open Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+h1, h2, h3 { font-family: 'Poppins', sans-serif; }
