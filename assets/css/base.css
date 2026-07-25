@@ -1,11 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap');
+@import url('https://unpkg.com/@phosphor-icons/web@2.0.3/src/icons.css');
+
 :root {
     --primary: #1B5E20;
     --secondary: #81C784;
     --accent: #FFD54F;
     --text: #212121;
     --bg: #FAFAFA;
+
+    /* Font Scale */
+    --h1-fs: 2.5rem;
+    --h2-fs: 2rem;
+    --h3-fs: 1.5rem;
+    --body-fs: 1rem;
+    --small-fs: 0.875rem;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Open Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+body { font-family: 'Open Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: var(--body-fs); }
+h1, h2, h3 { font-family: 'Poppins', sans-serif; line-height: 1.2; }
+h1 { font-size: var(--h1-fs); }
+h2 { font-size: var(--h2-fs); }
+h3 { font-size: var(--h3-fs); }
+small { font-size: var(--small-fs); }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Responsive utility */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --h1-fs: 2rem;
+        --h2-fs: 1.75rem;
+        --h3-fs: 1.25rem;
+        --body-fs: 0.9375rem; /* 15px */
+    }
+}

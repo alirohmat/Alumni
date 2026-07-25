@@ -18,10 +18,31 @@
 .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 
 @media (max-width: 768px) {
-    .navbar-links { display: none; flex-direction: column; gap: .5rem; padding: 1rem 0; }
-    .navbar-links.open { display: flex; }
+    .navbar {
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .navbar-links { 
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        background: var(--primary);
+        flex-direction: column; 
+        gap: 0; padding: 1rem 0;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 99;
+    }
+    .navbar-links.open { transform: translateY(0); }
     .navbar-toggle { display: block; }
-    .page { padding: 1rem; }
+    .page { padding: 1rem; margin-top: 56px; }
+    
+    .hero { padding: 3rem 1rem; }
+    .page-title { margin-bottom: 1.5rem; }
 }
 
 footer {
